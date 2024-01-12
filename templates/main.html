@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}list{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+    .car-image {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+  </style>
+{% endblock %}
+{% block content %}
+  <h1>Index</h1>
+  <p class="important">
+    Welcome to my awesome list picture
+  </p>
+
+  <!-- Loop through the list and display car images -->
+  {% for image_url in car_images %}
+    <img src="{{ image_url }}" alt="Car Image" class="car-image">
+  {% endfor %}
+{% endblock %}

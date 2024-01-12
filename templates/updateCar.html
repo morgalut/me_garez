@@ -1,0 +1,23 @@
+<!-- Display cars from the SQLite database -->
+<h3>SQLite Cars</h3>
+{% if sqlite_cars %}
+    <ul>
+        {% for car in sqlite_cars %}
+            <li>
+                {% if car is iterable %}
+                    {{ car[0] }} - {{ car[1] }} ({{ car[2] }}) - Score: {{ car[3] }}
+                {% else %}
+                    {{ car.id }} - {{ car.car_name }} ({{ car.year }}) - Score: {{ car.score }}
+                {% endif %}
+                <form method="post" action="{{ url_for('delete_car', car_id=car[0] if car is iterable else car.id) }}" style="display: inline;">
+                    <input type="submit" value="Delete">
+                </form>
+                <form method="get" action="{{ url_for('update_car', car_id=car[0] if car is iterable else car.id) }}" style="display: inline;">
+                    <input type="submit" value="Update">
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No cars found in SQLite database.</p>
+{% endif %}

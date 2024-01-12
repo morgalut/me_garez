@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block title %}add car{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+    ul { list-style-type: none; padding: 0; }
+    li { margin-bottom: 20px;  padding: 10px; }
+    form { display: inline-block; }
+    label { display: block; margin-bottom: 5px; }
+    input { margin-bottom: 10px; }
+  </style>
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+<h2>Add Car</h2>
+<form method="post" action="{{ url_for('add_car') }}">
+    <label for="car_name">Car Name:</label>
+    <input type="text" id="car_name" name="car_name" required><br><br>
+
+    <label for="year">Year:</label>
+    <input type="number" id="year" name="year" required><br><br>
+
+    <label for="score">Score:</label>
+    <input type="number" id="score" name="score" required><br><br>
+
+    <input type="submit" value="Add Car">
+</form>
+  <p class="important">
+    Welcome to my awesome homepage.
+{% endblock %}

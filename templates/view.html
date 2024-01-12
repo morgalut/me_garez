@@ -1,0 +1,61 @@
+        {% extends "layout.html" %}
+        {% block title %}view{% endblock %}
+        {% block head %}
+        {{ super() }}
+        <style type="text/css">
+            .important { color: #336699; }
+            ul { list-style-type: none; padding: 0; }
+            li { margin-bottom: 20px;  padding: 10px; }
+            form { display: inline-block; }
+            label { display: block; margin-bottom: 5px; }
+            input { margin-bottom: 10px; }
+        </style>
+        {% endblock %}
+        {% block content %}
+        <h2>Cars</h2>
+
+        <!-- Search form -->
+        <form method="post" action="{{ url_for('view_cars') }}">
+            <label for="search_term">Search:</label>
+            <input type="text" id="search_term" name="search_term">
+            <input type="submit" value="Search">
+        </form>
+
+        <!-- Display cars from the SQLite database -->
+        <h3>SQLite Cars</h3>
+        {% if sqlite_cars %}
+            <ul>
+                {% for car in sqlite_cars %}
+                    <li>
+                        {% if car is iterable %}
+                            {{ car[0] }} - {{ car[1] }} ({{ car[2] }}) - Score: {{ car[3] }}
+                        {% else %}
+                            {{ car.id }} - {{ car.car_name }} ({{ car.year }}) - Score: {{ car.score }}
+                        {% endif %}
+                        <form method="post" action="{{ url_for('delete_car', car_id=car[0] if car is iterable else car.id) }}">
+                            <input type="submit" value="Delete">
+                        </form>
+                        
+                        <!-- Update Form -->
+                        <form method="post" action="{{ url_for('update_car', car_id=car[0] if car is iterable else car.id) }}">
+                            <label for="new_car_name">New Car Name:</label>
+                            <input type="text" id="new_car_name" name="new_car_name">
+                            
+                            <label for="new_year">New Year:</label>
+                            <input type="text" id="new_year" name="new_year">
+                            
+                            <label for="new_score">New Score:</label>
+                            <input type="text" id="new_score" name="new_score">
+                            
+                            <input type="submit" value="Update">
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No cars found in the SQLite database.</p>
+        {% endif %}
+
+        <p class="important"></p>
+        Welcome to my awesome view car.
+        {% endblock %}
